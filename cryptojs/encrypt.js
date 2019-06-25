@@ -19,7 +19,11 @@ module.exports = function (RED) {
 					// debugging message
 					node.debug('Encrypting payload using '+node.algorithm);
 					// encrypt with CryptoJS
-					msg.payload = CryptoJS[node.algorithm].encrypt(msg.payload, node.key).toString();
+					if(msg.key) {
+						msg.payload = CryptoJS[node.algorithm].encrypt(msg.payload, msg.key).toString();  
+					} else { 
+					       msg.payload = CryptoJS[node.algorithm].encrypt(msg.payload, node.key).toString();
+					}
 				} else {
 					// debugging message
 					node.trace('Nothing to encrypt: empty payload');
